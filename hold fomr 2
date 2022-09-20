@@ -1,0 +1,629 @@
+ import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:StudierStudyApplication/utilities/group_card.dart';
+import 'package:StudierStudyApplication/create_group.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+ 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List groupsForYou = [
+    // groupname
+    ['Koders', 'Online', 'lib/icons/list.png', 'ff17'],
+    ['Koders', 'Online', 'lib/icons/list.png', 'ff17'],
+    ['Koders', 'Online', 'lib/icons/list.png', 'ff17'],
+  ];
+
+  get bottomNavigationBar => null;
+  int currentIndex = 0;
+
+  final double coverHeight = 50;
+  final double profileHeight = 75;
+  final double right = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height * 0.13;
+    final top = (height * 0.6) - profileHeight / 2;
+
+//Scaffold
+    return Scaffold(
+//Body
+      body: currentIndex == 0
+          ? ListView(
+              //  crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+//Cover Image and Profile Image
+                Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+                      buildCoverImage(height),
+                      Positioned(
+                          top: top, right: right, child: buildProfileImage()),
+                    ]),
+                const SizedBox(height: 5),
+
+//Greating Text
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0),
+                  child: const Text(
+                    'Hi Divine',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26.0,
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0),
+                  child: const Text(
+                    'Ready to learn?',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 31, 35, 36),
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+
+//Group Cards
+                Container(
+                  height: height * 2.00,
+                  child: ListView.builder(
+                      itemCount: groupsForYou.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return group_card(
+                          group_name: groupsForYou[index][0],
+                          group_state: groupsForYou[index][1],
+                          group_image: groupsForYou[index][2],
+                          group_location: groupsForYou[index][3],
+                        );
+                      }),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                ),
+
+//Main Buttons
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CreateGroup()));
+                        },
+
+//Create Button
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.grey[200],
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: 10,
+                                  color: Color.fromARGB(34, 0, 0, 0),
+                                ),
+                              ]),
+                          width: MediaQuery.of(context).size.width * 0.30,
+                          height: MediaQuery.of(context).size.height * 0.29,
+                          child: Column(children: [
+//Button Icon
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              child: Icon(Icons.add_circle_outline_sharp,
+                                  size: 50, color: Colors.black),
+                            ),
+                            Column(
+                              children: [
+                                Container(
+//Button Main Text
+                                  child: Text(
+                                    'Create',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+
+//Button SubText
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    child: Text(
+                                      'create a new study group',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ]),
+                        ),
+                      ),
+
+//Second Button
+                      Column(
+                        children: [
+//Top Second Button
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                 currentIndex = 1;
+
+                                
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.grey[200],
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 10,
+                                      spreadRadius: 10,
+                                      color: Color.fromARGB(34, 0, 0, 0),
+                                    ),
+                                  ]),
+                              width: MediaQuery.of(context).size.width * 0.30,
+                              height: MediaQuery.of(context).size.height * 0.14,
+                              child: Column(children: [
+                                //Icon
+                                Container(
+                                  height: height * 0.07,
+                                  child: Icon(Icons.people_outline_rounded,
+                                      size: 30, color: Colors.black),
+                                ),
+                                SizedBox(
+                                  height: height * 0.25,
+                                ),
+                                //Text 1
+                                Column(
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        'Stats',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: height * 0.05,
+                                    ),
+                                    //Text 2
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: Text(
+                                          'your Study Statistics',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ]),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: height * 0.08,
+                          ),
+
+//Bottom Second Button
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.grey[200],
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 10,
+                                    spreadRadius: 10,
+                                    color: Color.fromARGB(34, 0, 0, 0),
+                                  ),
+                                ]),
+                            width: MediaQuery.of(context).size.width * 0.30,
+                            height: MediaQuery.of(context).size.height * 0.14,
+                            child: Column(children: [
+//Icon
+                              Container(                  
+
+                                height: height * 0.07,
+                                child: Icon(Icons.people_outline_rounded,
+                                    size: 30, color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: height * 0.25,
+                              ),
+//Text 1
+                              Column(
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      'Join',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.04,
+                                  ),
+//Text 2
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(
+                                        'join an ongoing study group',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ) : currentIndex == 1 ?
+          
+          
+
+          /* =======================    STATISTICS PAGE =====================  */
+          
+          Column(
+             children: [
+                SizedBox(height: 20,),
+
+                Row(
+                  
+
+                    
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    
+                    children: [
+                    GestureDetector(
+                      onTap: () {
+                          setState(() {
+                              currentIndex = 0;
+
+                            
+                          });
+                        },
+                     
+                      child: Container(
+                        child: Icon(Icons.arrow_back_ios),
+                      ),
+                    ),
+
+                      Text(
+                        'Study Statistics',
+                         style: TextStyle(
+                            fontSize: 25,
+                            color: Color.fromARGB(255, 51, 129, 182),
+                          ),
+                        
+                        ),
+                        
+
+                      Container(
+                     ),
+                    
+                  ],),
+              Column(
+                children: [
+                  SizedBox(height: 20,),
+
+                
+
+                  Column(
+                    children: [
+                     
+ 
+ 
+                      SizedBox(height: 30,),
+
+ 
+
+                            Container(
+                             decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.grey[200],
+                               boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: 10,
+                                  color: Color.fromARGB(34, 0, 0, 0),
+                                ),
+                              ]),                     
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.76,
+                              child: Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                
+                                children: [
+                                
+                                Icon(Icons.swipe_right_rounded),
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 27,),
+                                      Text('Group Studies Taken',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 128, 145),
+                                      ),
+                                      ),
+                                      SizedBox(height: 10,),
+
+                                      Text('23',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 64, 73),
+                                      ),)
+                                    ],
+                                  ),
+                                )
+ 
+                                
+                              ]),
+
+                            ),
+
+                      SizedBox(height: 30,),
+
+ 
+
+                            Container(
+                             decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.grey[200],
+                               boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: 10,
+                                  color: Color.fromARGB(34, 0, 0, 0),
+                                ),
+                              ]),                     
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.76,
+                              child: Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                
+                                children: [
+                                
+                                Icon(Icons.bar_chart,),
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 27,),
+                                      Text('Groups Created',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 128, 145),
+                                      ),
+                                      ),
+                                       SizedBox(height: 10,),
+
+                                      Text('11',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 64, 73),
+                                      ),)
+                                    ],
+                                  ),
+                                )
+ 
+                                
+                              ]),
+
+                            ),
+
+
+                            SizedBox(height: 30,),
+
+
+
+                            Container(
+                             decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.grey[200],
+                               boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: 10,
+                                  color: Color.fromARGB(34, 0, 0, 0),
+                                ),
+                              ]),                     
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.76,
+                              child: Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                
+                                children: [
+                                
+                                Icon(Icons.flip_camera_android_outlined),
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 27,),
+                                      Text('Groups Joined',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 128, 145),
+                                      ),
+                                      ),
+                                      SizedBox(height: 10,),
+
+                                      Text('12',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 64, 73),
+                                      ),)
+                                    ],
+                                  ),
+                                )
+ 
+                                
+                              ]),
+
+                            ),
+
+                                SizedBox(height: 30,),
+
+
+
+                            Container(
+                             decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.grey[200],
+                               boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: 10,
+                                  color: Color.fromARGB(34, 0, 0, 0),
+                                ),
+                              ]),                     
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.76,
+                              child: Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                
+                                children: [
+                                
+                                Icon(Icons.timelapse),
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 27,),
+                                      Text('Total Study Time',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 128, 145),
+                                      ),
+                                      ),
+                                      SizedBox(height: 10,),
+
+                                      Text('123 Hrs',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 64, 73),
+                                      ),)
+                                    ],
+                                  ),
+                                )
+ 
+                                
+                              ]),
+
+                            ),
+                     ],
+ 
+                  )
+                ],
+                  
+
+                
+                
+                
+              ),
+            ],
+          ) : currentIndex == 3 ?
+
+          SizedBox(height: 3,);
+//Bottom Navigation
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          child: GNav(
+            backgroundColor: Colors.black,
+            color: Colors.white,
+            activeColor: Colors.grey,
+            tabBackgroundColor: Color.fromARGB(255, 88, 97, 99),
+            gap: 8,
+            padding: EdgeInsets.all(16),
+            tabs: const [
+              GButton(
+                icon: Icons.home,
+                text: 'Home',
+              ),
+              GButton(
+                icon: Icons.notifications,
+                text: 'Notifications',
+              ),
+              GButton(
+                icon: Icons.person,
+                text: 'Profile',
+              ),
+              GButton(icon: Icons.settings, text: 'Settings'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildProfileImage() => CircleAvatar(
+        radius: profileHeight / 2,
+        backgroundColor: Colors.grey.shade800,
+        backgroundImage: const NetworkImage(
+          'https://www.dreamstime.com/digital-neon-cyan-abstract-background-liquify-flow-liquid-wave-background-neon-cyan-abstract-background-liquify-flow-image130291495',
+        ),
+      );
+}
+
+Widget buildCoverImage(height) {
+  return Container(
+      color: Colors.grey,
+      child: Image.asset(
+        'assets/images/over.jpg',
+        width: double.infinity,
+        height: height * 0.6,
+        fit: BoxFit.cover,
+      ));
+}
